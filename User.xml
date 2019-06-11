@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.2.1 (Build 803U_SU)" ts="2019-06-11 11:34:22">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.2.1 (Build 803U_SU)" ts="2019-06-11 20:05:05">
 <Project name="PharmacyProject" LastModified="2019-06-11 10:51:18.814973">
   <Items>
     <ProjectItem name="User.Medicine" type="CLS"></ProjectItem>
@@ -16,18 +16,39 @@
 
 <Class name="User.Medicine">
 <Super>User.Product</Super>
-<TimeChanged>65175,40989.351324</TimeChanged>
+<TimeChanged>65175,47837.773528</TimeChanged>
 <TimeCreated>65175,37070.651336</TimeCreated>
 
 <Storage name="Default">
 <Type>%Library.CacheStorage</Type>
+<ExtentSize>12</ExtentSize>
+<Property name="%%CLASSNAME">
+<Selectivity>100.0000%</Selectivity>
+<AverageFieldSize>10</AverageFieldSize>
+</Property>
+<Property name="%%ID">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>1.25</AverageFieldSize>
+</Property>
+<Property name="name">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>16.08</AverageFieldSize>
+</Property>
+<Property name="price">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>4</AverageFieldSize>
+</Property>
+<Property name="producer">
+<Selectivity>12.5000%</Selectivity>
+<AverageFieldSize>1.17</AverageFieldSize>
+</Property>
 </Storage>
 </Class>
 
 
 <Class name="User.Patient">
 <Super>User.Person</Super>
-<TimeChanged>65175,40989.359376</TimeChanged>
+<TimeChanged>65175,48140.102695</TimeChanged>
 <TimeCreated>65175,38809.460726</TimeCreated>
 
 <Property name="patientNumber">
@@ -48,8 +69,8 @@
 <Storage name="Default">
 <Type>%Library.CacheStorage</Type>
 <DefaultData>PatientDefaultData</DefaultData>
+<ExtentSize>21</ExtentSize>
 <Data name="PatientDefaultData">
-<Structure>listnode</Structure>
 <Subscript>"Patient"</Subscript>
 <Value name="1">
 <Value>patientNumber</Value>
@@ -58,13 +79,40 @@
 <Value>prescriptions</Value>
 </Value>
 </Data>
+<Property name="%%CLASSNAME">
+<Selectivity>100.0000%</Selectivity>
+<AverageFieldSize>9</AverageFieldSize>
+</Property>
+<Property name="%%ID">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>1.57</AverageFieldSize>
+</Property>
+<Property name="firstName">
+<Selectivity>4.7619%</Selectivity>
+<AverageFieldSize>4.76</AverageFieldSize>
+</Property>
+<Property name="lastName">
+<Selectivity>4.7619%</Selectivity>
+<AverageFieldSize>5.05</AverageFieldSize>
+</Property>
+<Property name="patientNumber">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>8.52</AverageFieldSize>
+</Property>
+<Property name="prescriptions">
+<Selectivity>7.6923%</Selectivity>
+<AverageFieldSize>14.24</AverageFieldSize>
+</Property>
+<SQLMap name="patientNumberIndex">
+<BlockCount>-4</BlockCount>
+</SQLMap>
 </Storage>
 </Class>
 
 
 <Class name="User.Person">
 <Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
-<TimeChanged>65175,41194.306767</TimeChanged>
+<TimeChanged>65175,70264.053401</TimeChanged>
 <TimeCreated>65175,38733.434778</TimeCreated>
 
 <Property name="firstName">
@@ -78,10 +126,7 @@
 </Property>
 
 <Method name="getFullName">
-<Final>1</Final>
-<Language>java</Language>
-<ReturnType>%String</ReturnType>
-<Implementation><![CDATA[	return firstName + " " + lastName;
+<Implementation><![CDATA[	WRITE !,"Imię i nazwisko: ", ..firstName, " ", ..lastName
 ]]></Implementation>
 </Method>
 
@@ -109,7 +154,7 @@
 
 <Class name="User.Pharmacist">
 <Super>User.Person</Super>
-<TimeChanged>65175,40989.355799</TimeChanged>
+<TimeChanged>65175,47929.936959</TimeChanged>
 <TimeCreated>65175,38916.293935</TimeCreated>
 
 <Property name="numberPWZF">
@@ -120,6 +165,7 @@
 <Storage name="Default">
 <Type>%Library.CacheStorage</Type>
 <DefaultData>PharmacistDefaultData</DefaultData>
+<ExtentSize>12</ExtentSize>
 <Data name="PharmacistDefaultData">
 <Structure>listnode</Structure>
 <Subscript>"Pharmacist"</Subscript>
@@ -127,13 +173,33 @@
 <Value>numberPWZF</Value>
 </Value>
 </Data>
+<Property name="%%CLASSNAME">
+<Selectivity>100.0000%</Selectivity>
+<AverageFieldSize>12</AverageFieldSize>
+</Property>
+<Property name="%%ID">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>2</AverageFieldSize>
+</Property>
+<Property name="firstName">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>5</AverageFieldSize>
+</Property>
+<Property name="lastName">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>4.83</AverageFieldSize>
+</Property>
+<Property name="numberPWZF">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>8.83</AverageFieldSize>
+</Property>
 </Storage>
 </Class>
 
 
 <Class name="User.Prescription">
 <Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
-<TimeChanged>65175,41576.726581</TimeChanged>
+<TimeChanged>65175,70117.851179</TimeChanged>
 <TimeCreated>65175,37817.841433</TimeCreated>
 
 <Property name="number">
@@ -152,26 +218,24 @@
 </Property>
 
 <Method name="calculateTotalPrice">
-<Language>java</Language>
-<ReturnType>%Double</ReturnType>
 <Implementation><![CDATA[
-	double sum=0.0;
-	for(int i=0; i<products.size();i++){
-		sum+=products.get(i).price;
+	
+	Set sum=0
+	For i = 1:1:..products.Count()
+	{
+		set sum=sum + ..products.GetAt(i).price
 	}
-	return sum;
+	WRITE !,"Razem: ", sum,!
 ]]></Implementation>
 </Method>
 
 <Method name="printPrescription">
-<Language>java</Language>
 <Implementation><![CDATA[
-	String print;
-	for(int i=0; i<products.size();i++){
-		print+=products.get(i).name + " " + products.get(i).price +"\n";
+	WRITE !,"Recepta nr: ", ..number,!
+	For i = 1:1:..products.Count()
+	{
+		WRITE ..products.GetAt(i).name , " " , ..products.GetAt(i).price,!
 	}
-	print+=calculateTotalPrice();
-	System.out.println(print);
 ]]></Implementation>
 </Method>
 
@@ -182,6 +246,7 @@
 <IdLocation>^User.PrescriptionD</IdLocation>
 <IndexLocation>^User.PrescriptionI</IndexLocation>
 <StreamLocation>^User.PrescriptionS</StreamLocation>
+<ExtentSize>12</ExtentSize>
 <Data name="PrescriptionDefaultData">
 <Value name="1">
 <Value>%%CLASSNAME</Value>
@@ -193,13 +258,35 @@
 <Value>products</Value>
 </Value>
 </Data>
+<Property name="%%CLASSNAME">
+<Selectivity>100.0000%</Selectivity>
+<AverageFieldSize>1</AverageFieldSize>
+</Property>
+<Property name="%%ID">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>1.25</AverageFieldSize>
+</Property>
+<Property name="number">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>9</AverageFieldSize>
+</Property>
+<Property name="products">
+<Selectivity>9.0909%</Selectivity>
+<AverageFieldSize>25</AverageFieldSize>
+</Property>
+<SQLMap name="IDKEY">
+<BlockCount>-4</BlockCount>
+</SQLMap>
+<SQLMap name="numberIndex">
+<BlockCount>-4</BlockCount>
+</SQLMap>
 </Storage>
 </Class>
 
 
 <Class name="User.Producer">
 <Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
-<TimeChanged>65175,40989.209306</TimeChanged>
+<TimeChanged>65175,47828.846616</TimeChanged>
 <TimeCreated>65175,37259.381569</TimeCreated>
 
 <Property name="name">
@@ -218,6 +305,7 @@
 <IdLocation>^User.ProducerD</IdLocation>
 <IndexLocation>^User.ProducerI</IndexLocation>
 <StreamLocation>^User.ProducerS</StreamLocation>
+<ExtentSize>12</ExtentSize>
 <Data name="ProducerDefaultData">
 <Structure>listnode</Structure>
 <Subscript/>
@@ -231,6 +319,25 @@
 <Value>countryOfOrgin</Value>
 </Value>
 </Data>
+<Property name="%%CLASSNAME">
+<Selectivity>100.0000%</Selectivity>
+<AverageFieldSize>1</AverageFieldSize>
+</Property>
+<Property name="%%ID">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>1.25</AverageFieldSize>
+</Property>
+<Property name="countryOfOrgin">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>4.92</AverageFieldSize>
+</Property>
+<Property name="name">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>15.5</AverageFieldSize>
+</Property>
+<SQLMap name="IDKEY">
+<BlockCount>-4</BlockCount>
+</SQLMap>
 </Storage>
 </Class>
 
@@ -285,11 +392,32 @@
 
 <Class name="User.Suplement">
 <Super>User.Product</Super>
-<TimeChanged>65175,40989.349504</TimeChanged>
+<TimeChanged>65175,47852.845497</TimeChanged>
 <TimeCreated>65175,37117.953299</TimeCreated>
 
 <Storage name="Default">
 <Type>%Library.CacheStorage</Type>
+<ExtentSize>12</ExtentSize>
+<Property name="%%CLASSNAME">
+<Selectivity>100.0000%</Selectivity>
+<AverageFieldSize>11</AverageFieldSize>
+</Property>
+<Property name="%%ID">
+<Selectivity>1</Selectivity>
+<AverageFieldSize>2</AverageFieldSize>
+</Property>
+<Property name="name">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>16.17</AverageFieldSize>
+</Property>
+<Property name="price">
+<Selectivity>8.3333%</Selectivity>
+<AverageFieldSize>4</AverageFieldSize>
+</Property>
+<Property name="producer">
+<Selectivity>12.5000%</Selectivity>
+<AverageFieldSize>1.33</AverageFieldSize>
+</Property>
 </Storage>
 </Class>
 </Export>
