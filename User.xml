@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.2.1 (Build 803U_SU)" ts="2019-06-11 11:07:29">
+<Project name="PharmacyProject" LastModified="2019-06-11 10:51:18.8157">
+  <Items>
+    <ProjectItem name="User.Product" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Medicine" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Suplement" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Producer" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Prescription" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Person" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Pharmacist" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Patient" type="CLS"></ProjectItem>
+  </Items>
+</Project>
+
+
+<Class name="User.Medicine">
+<Super>User.Product</Super>
+<TimeChanged>65175,37070.651336</TimeChanged>
+<TimeCreated>65175,37070.651336</TimeCreated>
+</Class>
+
+
+<Class name="User.Patient">
+<Super>User.Person</Super>
+<TimeChanged>65175,39671.348371</TimeChanged>
+<TimeCreated>65175,38809.460726</TimeCreated>
+
+<Property name="patientNumber">
+<Type>%Integer</Type>
+<Required>1</Required>
+</Property>
+
+<Property name="prescriptions">
+<Type>Prescription</Type>
+<Collection>list</Collection>
+</Property>
+
+<Index name="patientNumberIndex">
+<Properties>patientNumber</Properties>
+<Unique>1</Unique>
+</Index>
+</Class>
+
+
+<Class name="User.Person">
+<Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
+<TimeChanged>65175,38733.434778</TimeChanged>
+<TimeCreated>65175,38733.434778</TimeCreated>
+
+<Property name="firstName">
+<Type>%String</Type>
+<Required>1</Required>
+</Property>
+
+<Property name="lastName">
+<Type>%String</Type>
+<Required>1</Required>
+</Property>
+
+<Method name="getFullName">
+<Final>1</Final>
+<Language>java</Language>
+<ReturnType>%String</ReturnType>
+</Method>
+</Class>
+
+
+<Class name="User.Pharmacist">
+<Super>User.Person</Super>
+<TimeChanged>65175,38916.293935</TimeChanged>
+<TimeCreated>65175,38916.293935</TimeCreated>
+
+<Property name="numberPWZF">
+<Type>%Integer</Type>
+<Required>1</Required>
+</Property>
+</Class>
+
+
+<Class name="User.Prescription">
+<Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
+<TimeChanged>65175,39964.539909</TimeChanged>
+<TimeCreated>65175,37817.841433</TimeCreated>
+
+<Property name="number">
+<Type>%Integer</Type>
+<Required>1</Required>
+</Property>
+
+<Index name="numberIndex">
+<Properties>number</Properties>
+<Unique>1</Unique>
+</Index>
+
+<Property name="products">
+<Type>Product</Type>
+<Collection>list</Collection>
+</Property>
+
+<Method name="calculateTotalPrice">
+<Language>java</Language>
+<ReturnType>%Double</ReturnType>
+</Method>
+
+<Method name="printPrescription">
+<Language>java</Language>
+</Method>
+</Class>
+
+
+<Class name="User.Producer">
+<Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
+<TimeChanged>65175,37434.991279</TimeChanged>
+<TimeCreated>65175,37259.381569</TimeCreated>
+
+<Property name="name">
+<Type>%String</Type>
+<Required>1</Required>
+</Property>
+
+<Property name="countryOfOrgin">
+<Type>%String</Type>
+</Property>
+</Class>
+
+
+<Class name="User.Product">
+<Abstract>1</Abstract>
+<Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
+<TimeChanged>65175,39773.944886</TimeChanged>
+<TimeCreated>65175,37015.992311</TimeCreated>
+
+<Property name="name">
+<Type>%String</Type>
+<Required>1</Required>
+</Property>
+
+<Property name="price">
+<Type>%Decimal</Type>
+<Required>1</Required>
+</Property>
+
+<Property name="producer">
+<Type>Producer</Type>
+<Required>1</Required>
+</Property>
+</Class>
+
+
+<Class name="User.Suplement">
+<Super>User.Product</Super>
+<TimeChanged>65175,37117.953299</TimeChanged>
+<TimeCreated>65175,37117.953299</TimeCreated>
+</Class>
+</Export>
