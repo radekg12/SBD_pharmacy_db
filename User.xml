@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.2.1 (Build 803U_SU)" ts="2019-06-11 11:07:29">
-<Project name="PharmacyProject" LastModified="2019-06-11 10:51:18.8157">
+<Export generator="Cache" version="25" zv="Cache for Windows (x86-64) 2016.2.1 (Build 803U_SU)" ts="2019-06-11 11:34:22">
+<Project name="PharmacyProject" LastModified="2019-06-11 10:51:18.814973">
   <Items>
-    <ProjectItem name="User.Product" type="CLS"></ProjectItem>
     <ProjectItem name="User.Medicine" type="CLS"></ProjectItem>
-    <ProjectItem name="User.Suplement" type="CLS"></ProjectItem>
-    <ProjectItem name="User.Producer" type="CLS"></ProjectItem>
-    <ProjectItem name="User.Prescription" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Patient" type="CLS"></ProjectItem>
     <ProjectItem name="User.Person" type="CLS"></ProjectItem>
     <ProjectItem name="User.Pharmacist" type="CLS"></ProjectItem>
-    <ProjectItem name="User.Patient" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Prescription" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Producer" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Product" type="CLS"></ProjectItem>
+    <ProjectItem name="User.Suplement" type="CLS"></ProjectItem>
   </Items>
 </Project>
 
 
 <Class name="User.Medicine">
 <Super>User.Product</Super>
-<TimeChanged>65175,37070.651336</TimeChanged>
+<TimeChanged>65175,40989.351324</TimeChanged>
 <TimeCreated>65175,37070.651336</TimeCreated>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+</Storage>
 </Class>
 
 
 <Class name="User.Patient">
 <Super>User.Person</Super>
-<TimeChanged>65175,39671.348371</TimeChanged>
+<TimeChanged>65175,40989.359376</TimeChanged>
 <TimeCreated>65175,38809.460726</TimeCreated>
 
 <Property name="patientNumber">
@@ -40,12 +44,27 @@
 <Properties>patientNumber</Properties>
 <Unique>1</Unique>
 </Index>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>PatientDefaultData</DefaultData>
+<Data name="PatientDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"Patient"</Subscript>
+<Value name="1">
+<Value>patientNumber</Value>
+</Value>
+<Value name="2">
+<Value>prescriptions</Value>
+</Value>
+</Data>
+</Storage>
 </Class>
 
 
 <Class name="User.Person">
 <Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
-<TimeChanged>65175,38733.434778</TimeChanged>
+<TimeChanged>65175,41194.306767</TimeChanged>
 <TimeCreated>65175,38733.434778</TimeCreated>
 
 <Property name="firstName">
@@ -62,25 +81,59 @@
 <Final>1</Final>
 <Language>java</Language>
 <ReturnType>%String</ReturnType>
+<Implementation><![CDATA[	return firstName + " " + lastName;
+]]></Implementation>
 </Method>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^User.PersonD</DataLocation>
+<DefaultData>PersonDefaultData</DefaultData>
+<IdLocation>^User.PersonD</IdLocation>
+<IndexLocation>^User.PersonI</IndexLocation>
+<StreamLocation>^User.PersonS</StreamLocation>
+<Data name="PersonDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>firstName</Value>
+</Value>
+<Value name="3">
+<Value>lastName</Value>
+</Value>
+</Data>
+</Storage>
 </Class>
 
 
 <Class name="User.Pharmacist">
 <Super>User.Person</Super>
-<TimeChanged>65175,38916.293935</TimeChanged>
+<TimeChanged>65175,40989.355799</TimeChanged>
 <TimeCreated>65175,38916.293935</TimeCreated>
 
 <Property name="numberPWZF">
 <Type>%Integer</Type>
 <Required>1</Required>
 </Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DefaultData>PharmacistDefaultData</DefaultData>
+<Data name="PharmacistDefaultData">
+<Structure>listnode</Structure>
+<Subscript>"Pharmacist"</Subscript>
+<Value name="1">
+<Value>numberPWZF</Value>
+</Value>
+</Data>
+</Storage>
 </Class>
 
 
 <Class name="User.Prescription">
 <Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
-<TimeChanged>65175,39964.539909</TimeChanged>
+<TimeChanged>65175,41576.726581</TimeChanged>
 <TimeCreated>65175,37817.841433</TimeCreated>
 
 <Property name="number">
@@ -101,17 +154,52 @@
 <Method name="calculateTotalPrice">
 <Language>java</Language>
 <ReturnType>%Double</ReturnType>
+<Implementation><![CDATA[
+	double sum=0.0;
+	for(int i=0; i<products.size();i++){
+		sum+=products.get(i).price;
+	}
+	return sum;
+]]></Implementation>
 </Method>
 
 <Method name="printPrescription">
 <Language>java</Language>
+<Implementation><![CDATA[
+	String print;
+	for(int i=0; i<products.size();i++){
+		print+=products.get(i).name + " " + products.get(i).price +"\n";
+	}
+	print+=calculateTotalPrice();
+	System.out.println(print);
+]]></Implementation>
 </Method>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^User.PrescriptionD</DataLocation>
+<DefaultData>PrescriptionDefaultData</DefaultData>
+<IdLocation>^User.PrescriptionD</IdLocation>
+<IndexLocation>^User.PrescriptionI</IndexLocation>
+<StreamLocation>^User.PrescriptionS</StreamLocation>
+<Data name="PrescriptionDefaultData">
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>number</Value>
+</Value>
+<Value name="3">
+<Value>products</Value>
+</Value>
+</Data>
+</Storage>
 </Class>
 
 
 <Class name="User.Producer">
 <Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
-<TimeChanged>65175,37434.991279</TimeChanged>
+<TimeChanged>65175,40989.209306</TimeChanged>
 <TimeCreated>65175,37259.381569</TimeCreated>
 
 <Property name="name">
@@ -122,13 +210,35 @@
 <Property name="countryOfOrgin">
 <Type>%String</Type>
 </Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^User.ProducerD</DataLocation>
+<DefaultData>ProducerDefaultData</DefaultData>
+<IdLocation>^User.ProducerD</IdLocation>
+<IndexLocation>^User.ProducerI</IndexLocation>
+<StreamLocation>^User.ProducerS</StreamLocation>
+<Data name="ProducerDefaultData">
+<Structure>listnode</Structure>
+<Subscript/>
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>name</Value>
+</Value>
+<Value name="3">
+<Value>countryOfOrgin</Value>
+</Value>
+</Data>
+</Storage>
 </Class>
 
 
 <Class name="User.Product">
 <Abstract>1</Abstract>
 <Super>%Persistent,%Populate,%XML.Adaptor,%ZEN.DataModel.Adaptor</Super>
-<TimeChanged>65175,39773.944886</TimeChanged>
+<TimeChanged>65175,40989.247945</TimeChanged>
 <TimeCreated>65175,37015.992311</TimeCreated>
 
 <Property name="name">
@@ -145,12 +255,41 @@
 <Type>Producer</Type>
 <Required>1</Required>
 </Property>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+<DataLocation>^User.ProductD</DataLocation>
+<DefaultData>ProductDefaultData</DefaultData>
+<IdLocation>^User.ProductD</IdLocation>
+<IndexLocation>^User.ProductI</IndexLocation>
+<StreamLocation>^User.ProductS</StreamLocation>
+<Data name="ProductDefaultData">
+<Structure>listnode</Structure>
+<Subscript/>
+<Value name="1">
+<Value>%%CLASSNAME</Value>
+</Value>
+<Value name="2">
+<Value>name</Value>
+</Value>
+<Value name="3">
+<Value>price</Value>
+</Value>
+<Value name="4">
+<Value>producer</Value>
+</Value>
+</Data>
+</Storage>
 </Class>
 
 
 <Class name="User.Suplement">
 <Super>User.Product</Super>
-<TimeChanged>65175,37117.953299</TimeChanged>
+<TimeChanged>65175,40989.349504</TimeChanged>
 <TimeCreated>65175,37117.953299</TimeCreated>
+
+<Storage name="Default">
+<Type>%Library.CacheStorage</Type>
+</Storage>
 </Class>
 </Export>
